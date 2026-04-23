@@ -1,12 +1,109 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
   font-family: Arial, sans-serif;
-  margin: 40px;
+  line-height: 1.6;
+  background-color: #f4f7fb;
+  color: #1f2937;
 }
 
-h1 {
-  color: navy;
+.hero {
+  text-align: center;
+  padding: 60px 20px 30px;
+  background-color: #ffffff;
 }
 
-p {
-  color: #444;
+.hero h1 {
+  font-size: 3rem;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+  color: #4b5563;
+  margin-bottom: 25px;
+}
+
+.profile-photo img {
+  width: 180px;
+  height: 180px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 4px solid #dbeafe;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.navbar {
+  background-color: #111827;
+  padding: 15px 20px;
+}
+
+.navbar ul {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.navbar a {
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: bold;
+  transition: color 0.3s ease;
+}
+
+.navbar a:hover {
+  color: #93c5fd;
+}
+
+.content {
+  max-width: 1000px;
+  margin: 40px auto;
+  padding: 0 20px;
+}
+
+.section {
+  background-color: #ffffff;
+  margin-bottom: 25px;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+.section h2 {
+  margin-bottom: 15px;
+  color: #111827;
+}
+
+.section p {
+  color: #374151;
+}
+
+#professional-experience > ul > li {
+  margin-bottom: 24px;
+}
+
+#professional-experience ul ul {
+  padding-left: 15px;
+}
+
+#personal-projects ul ul {
+  padding-left: 15px;
+}
+
+#personal-projects > ul > li {
+  margin-bottom: 24px;
+}
+
+#certifications > ul > li {
+  margin-bottom: 24px;
+}
+
+html {
+  scroll-behavior: smooth;
 }
