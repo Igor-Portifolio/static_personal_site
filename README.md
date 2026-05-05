@@ -36,13 +36,26 @@ The first stage of the project is a manual deployment using the AWS Management C
 
 A future improvement may include a CI/CD pipeline to automate deployments from GitHub to S3.
 
-## Architecture
+## Paths Taken and Security Decisions
 
-### Initial Architecture
+### Endpoint in S3
 
-```text
-User
-  ↓
-S3 Static Website Endpoint
-  ↓
-HTML / CSS / Images
+In the first version of the project, the static website was hosted directly on Amazon S3 using the S3 Static Website Endpoint. As part of the security demonstration, a text file named mysecrets.txt was added to the website bucket to simulate sensitive information.
+
+This file does not contain real secrets. Its purpose is to demonstrate the risk of placing sensitive or internal files inside a public S3 bucket.
+
+In this initial architecture, the website was served through the S3 website endpoint over HTTP. This means the communication did not use HTTPS/TLS encryption. Also, because the bucket needed public read access to serve the website, any object covered by the public bucket policy could potentially be accessed directly through its URL.
+
+As a result, if a file such as mysecrets.txt were accidentally uploaded to the public bucket, it could be exposed to anyone who knew or discovered the object path. This helped identify a key security limitation of the first approach: using a public S3 bucket as the website endpoint increases the risk of accidental exposure of files that should not be public.
+
+### Cloud Front
+
+The solution to the first security limitation was to introduce Amazon CloudFront in front of the S3 bucket.
+
+Instead of exposing the entire S3 bucket publicly, CloudFront was configured as the public entry point of the application. The CloudFront origin points only to a specific folder inside the S3 bucket, named static_site/, where the public website files are stored.
+
+With this approach, users do not access the S3 bucket directly. They access the website through CloudFront, while the S3 bucket remains private. This reduces the risk of exposing sensitive files, because CloudFront is only allowed to retrieve objects from the static_site/ path.
+
+In addition, this architecture improves the security of the communication layer. CloudFront allows the website to be served over HTTPS, using TLS encryption. This provides a more secure protocol than the original S3 Static Website Endpoint over HTTP, adding confidentiality, integrity, and server authentication to the connection.
+
+Overall, this change improved the architecture by separating public website content from private files, reducing accidental exposure risks, and adding a stronger security layer through HTTPS and controlled access to the S3 origin.
