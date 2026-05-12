@@ -19,10 +19,8 @@ variable "environment" {
 variable "bucket_name" {
   description = "Globally unique name for the private S3 bucket."
   type        = string
-
-  # CHANGE THIS VALUE.
-  # S3 bucket names must be globally unique.
-  default = "CHANGE-ME-cloud-static-website-dev-your-name-2026"
+  
+  default = "cloud-static-website-terraform-dev-igor-machado-2026"
 }
 
 variable "static_site_prefix" {
@@ -34,5 +32,5 @@ variable "static_site_prefix" {
 variable "force_destroy_bucket" {
   description = "If true, Terraform can delete the bucket even when it contains objects. Use carefully."
   type        = bool
-  default     = false
+  default     = true
 }

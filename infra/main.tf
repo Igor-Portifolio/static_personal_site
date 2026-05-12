@@ -22,13 +22,6 @@ resource "aws_s3_bucket_public_access_block" "static_site" {
   restrict_public_buckets = true
 }
 
-resource "aws_s3_bucket_ownership_controls" "static_site" {
-  bucket = aws_s3_bucket.static_site.id
-
-  rule {
-    object_ownership = "BucketOwnerEnforced"
-  }
-}
 
 resource "aws_cloudfront_origin_access_control" "static_site" {
   name                              = "${var.project_name}-${var.environment}-oac"
@@ -46,7 +39,7 @@ resource "aws_cloudfront_distribution" "static_site" {
 
   origin {
     domain_name              = aws_s3_bucket.static_site.bucket_regional_domain_name
-    origin_id                = "s3-${aws_s3_bucket.static_site.id}"
+    origin_id                = "s3-${aws_s3_bucket.static_site.id}"   
     origin_path              = "/${var.static_site_prefix}"
     origin_access_control_id = aws_cloudfront_origin_access_control.static_site.id
 
@@ -59,7 +52,7 @@ resource "aws_cloudfront_distribution" "static_site" {
     target_origin_id       = "s3-${aws_s3_bucket.static_site.id}"
     viewer_protocol_policy = "redirect-to-https"
 
-    allowed_methods = ["GET", "HEAD", "OPTIONS"]
+    allowed_methods = ["GET", "HEAD"]
     cached_methods  = ["GET", "HEAD"]
 
     compress = true
